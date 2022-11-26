@@ -21,13 +21,15 @@ public class MainActivity extends AppCompatActivity {
     private ListView listView;
     private ArrayList<Produit> listeDesProduit = new ArrayList<Produit>();
     private ProductAdapter adapter;
+    private SQLProduct db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        db = new SQLProduct(this);
+        listeDesProduit = db.getListProduits();
         listView=findViewById(R.id.liste) ;
         adapter = new ProductAdapter(this, android.R.layout.activity_list_item,listeDesProduit);
         listView.setAdapter(adapter);
@@ -60,13 +62,13 @@ public class MainActivity extends AppCompatActivity {
             t.setCodeBarre(codebarre);
             t.setPrix(prix);
             t.setImage(image);
-            //long rowId = db.AddTask(t);
-           // t.setId((int) rowId);
+            long rowId = db.AddTask(t);
+           t.setId((int) rowId);
             listeDesProduit.add(t);
 
 
             //code variable
-           // listeDesProduit = db.getListContacts();
+            listeDesProduit = db.getListProduits();
 
             listView=(ListView) findViewById(R.id.liste) ;
 

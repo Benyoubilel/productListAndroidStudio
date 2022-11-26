@@ -1,7 +1,7 @@
 package com.example.productlist;
 
 public class Produit {
-    private long id;
+    private int id;
     private String libelle;
     private String codeBarre;
     private String prix;
@@ -23,6 +23,15 @@ public class Produit {
 
     }
 
+    public Produit(int id, String libelle, String codeBarre, String prix, String image, Boolean checkTask) {
+        this.id = id;
+        this.libelle = libelle;
+        this.codeBarre = codeBarre;
+        this.prix = prix;
+        this.checkTask = checkTask;
+        this.image = image;
+    }
+
     @Override
     public String toString() {
         return "Produit{" +
@@ -40,7 +49,7 @@ public class Produit {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -92,7 +101,7 @@ public class Produit {
         this.image = image;
     }
 
-    public Produit(long id, String libelle, String codeBarre, String prix, Boolean disponible, Boolean checkTask, String image) {
+    public Produit(int id, String libelle, String codeBarre, String prix, Boolean disponible, Boolean checkTask, String image) {
         this.id = id;
         this.libelle = libelle;
         this.codeBarre = codeBarre;
