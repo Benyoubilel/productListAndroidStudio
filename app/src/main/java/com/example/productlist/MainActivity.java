@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
         db = new SQLProduct(this);
         listeDesProduit = db.getListProduits();
         listView=findViewById(R.id.liste) ;
-        adapter = new ProductAdapter(this, android.R.layout.activity_list_item,listeDesProduit);
+        adapter = new ProductAdapter(MainActivity.this, android.R.layout.activity_list_item,listeDesProduit);
         listView.setAdapter(adapter);
 
         btnAjt=findViewById(R.id.ajouter);
@@ -40,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent= new Intent(MainActivity.this, MainActivityAjtP.class);
                 startActivity(intent);
+
             }
         });
 

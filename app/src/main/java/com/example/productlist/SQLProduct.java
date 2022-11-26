@@ -79,7 +79,7 @@ public class SQLProduct extends SQLiteOpenHelper {
         db.close();
         return rowId;
     }
-    public Produit getContact(int id){
+    public Produit getProduit(int id){
 
         // 1. get reference to readable DB
         SQLiteDatabase db = this.getReadableDatabase();
@@ -138,7 +138,7 @@ public class SQLProduct extends SQLiteOpenHelper {
         // return books
         return PRODUITS;
     }
-    public int updateContact(Produit Produits) {
+    public int updateProduit(Produit Produits) {
 
         // 1. get reference to writable DB
         SQLiteDatabase db = this.getWritableDatabase();
@@ -161,7 +161,7 @@ public class SQLProduct extends SQLiteOpenHelper {
 
     }
 
-    public void supprimerContact(Produit produits) {
+    public void supprimerProduit(Produit produits) {
 
         // 1. get reference to writable DB
         SQLiteDatabase db = this.getWritableDatabase();

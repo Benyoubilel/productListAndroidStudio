@@ -26,6 +26,11 @@ public class ProductAdapter extends BaseAdapter {
         this.context = context;
     }
 
+    public ProductAdapter(ArrayList<Produit> produits) {
+        this.produits = produits;
+    }
+
+
     @Override
     public int getCount() {
         return produits.size();
