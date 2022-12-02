@@ -5,16 +5,16 @@ public class Produit {
     private String libelle;
     private String codeBarre;
     private String prix;
-    private Boolean disponible;
-    private Boolean checkTask;
+    private boolean disponible;
+    private boolean checkTask;
     private String image;
 
-    public Produit( String libelle, String codeBarre, String prix, Boolean checkTask, String image) {
+    public Produit( String libelle, String codeBarre, String prix,Boolean disponible,  Boolean checkTask, String image) {
 
         this.libelle = libelle;
         this.codeBarre = codeBarre;
         this.prix = prix;
-       // this.disponible = disponible;
+        this.disponible = disponible;
         this.checkTask = checkTask;
         this.image = image;
     }
@@ -39,7 +39,7 @@ public class Produit {
                 ", libelle='" + libelle + '\'' +
                 ", codeBarre='" + codeBarre + '\'' +
                 ", prix='" + prix + '\'' +
-              //  ", disponible=" + disponible +
+                ", disponible=" + disponible +
                 ", checkTask=" + checkTask +
                 ", image='" + image + '\'' +
                 '}';
@@ -76,15 +76,15 @@ public class Produit {
     public void setPrix(String prix) {
         this.prix = prix;
     }
-/*
-    public Boolean getDisponible() {
+
+   public Boolean getDisponible() {
         return disponible;
     }
 
     public void setDisponible(Boolean disponible) {
         this.disponible = disponible;
     }
-*/
+
     public Boolean getCheckTask() {
         return checkTask;
     }
@@ -101,12 +101,11 @@ public class Produit {
         this.image = image;
     }
 
-    public Produit(int id, String libelle, String codeBarre, String prix, Boolean disponible, Boolean checkTask, String image) {
+    public Produit(int id, String libelle, String codeBarre , String prix, Boolean checkTask, String image) {
         this.id = id;
         this.libelle = libelle;
         this.codeBarre = codeBarre;
         this.prix = prix;
-        this.disponible = disponible;
         this.checkTask = checkTask;
         this.image = image;
     }

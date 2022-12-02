@@ -1,7 +1,5 @@
 package com.example.productlist;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +8,9 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
 
@@ -19,19 +20,18 @@ public class MainActivity extends AppCompatActivity {
     EditText libelle,codebarre,prix;
     CheckBox dipo;
     private ListView listView;
-    private ArrayList<Produit> listeDesProduit = new ArrayList<Produit>();
+    private ArrayList<Produit> listeDesProduit = new ArrayList<>();
     private ProductAdapter adapter;
-    private SQLProduct db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        db = new SQLProduct(this);
-        listeDesProduit = db.getListProduits();
+
         listView=findViewById(R.id.liste) ;
-        adapter = new ProductAdapter(MainActivity.this, android.R.layout.activity_list_item,listeDesProduit);
+
+        adapter = new ProductAdapter(MainActivity.this,listeDesProduit);
         listView.setAdapter(adapter);
 
         btnAjt=findViewById(R.id.ajouter);
@@ -39,45 +39,58 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent= new Intent(MainActivity.this, MainActivityAjtP.class);
-                startActivity(intent);
-
+                startActivityForResult(intent, 101);
             }
         });
 
+
+
+
     }
+
     @Override
     protected  void  onActivityResult(int requestCode, int resultCode, Intent data) {
 
         super.onActivityResult(requestCode, resultCode, data);
 
 
-        if (requestCode == 100 && resultCode == Activity.RESULT_OK)
+        if (requestCode == 101 && resultCode == Activity.RESULT_OK)
         {
+            Produit t = new Produit();
             String libelle=data.getStringExtra("libelle");
             String codebarre=data.getStringExtra("codeBarre");
             String prix=data.getStringExtra("prix");
-           // String numero=data.getStringExtra("disponible");
+            boolean dispo=data.getBooleanExtra("disponible",false);
             String image=data.getStringExtra("image");
-            Produit t = new Produit();
             t.setLibelle(libelle);
             t.setCodeBarre(codebarre);
             t.setPrix(prix);
+           t.setDisponible(dispo);
             t.setImage(image);
-            long rowId = db.AddTask(t);
-           t.setId((int) rowId);
             listeDesProduit.add(t);
-
-
-            //code variable
-            listeDesProduit = db.getListProduits();
-
-            listView=(ListView) findViewById(R.id.liste) ;
-
-            adapter = new ProductAdapter(this, android.R.layout.activity_list_item, listeDesProduit);
-
-            listView.setAdapter(adapter);
-
+            adapter.notifyDataSetChanged();
         }
     }
+    public void deleteProductButtonClick(View view)
+    {
+        ArrayList<Produit> checkedItems = adapter.getChecked();
+        Toast.makeText(this,String.valueOf(checkedItems.size()),Toast.LENGTH_LONG).show();
+        int itemCount = checkedItems.size();
+        for(int i=itemCount-1; i >= 0; i--){
+            adapter.remove(checkedItems.get(i));
+        }
+        adapter.ClearSelection();
+        adapter.notifyDataSetChanged();
+    }
+/*
+    public void UpdateProductButtonClick(View view) {
+        // ArrayList<Produit> checkedItems = adapter.getChecked();
+        Intent i = new Intent(MainActivity.this, MainActivityAjtP.class);
+        startActivityForResult(i, 101);
+
+    }
+    */
+
+
 
     }

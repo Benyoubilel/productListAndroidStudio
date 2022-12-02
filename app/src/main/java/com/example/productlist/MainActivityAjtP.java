@@ -18,6 +18,8 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import com.google.android.gms.cast.framework.media.ImagePicker;
+
 import java.io.ByteArrayOutputStream;
 
 @SuppressWarnings("ALL")
@@ -50,6 +52,7 @@ public class MainActivityAjtP extends AppCompatActivity {
             public void onClick(View view) {
                 Intent i = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 startActivityForResult(i,101);
+                //ImagePicker.Companion.with(MainActivityAjtP.this).cropp().MaxResultSize(1080,1080).start(101);
             }
         });
 
@@ -57,10 +60,17 @@ public class MainActivityAjtP extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent i =new Intent();
-                i.putExtra("libelle",libelle.getText().toString());
-                i.putExtra("codeBarre",codebarre.getText().toString());
-                i.putExtra("prix",prix.getText().toString());
-               // i.putExtra("disponible",dispo.getText().toString());
+                i.putExtra("libelle","libelle: "+libelle.getText().toString());
+                i.putExtra("codeBarre","Code: "+codebarre.getText().toString());
+                i.putExtra("disponible",dispo.isChecked());
+                i.putExtra("prix","prix: "+prix.getText().toString());
+           /*     if(dispo.isChecked()){
+                    String x= "disponible";
+               i.putExtra("disponible",x);
+                     }else{
+                   String x="Hors ,String disponible";
+                    i.putExtra("disponible","Hors ,String disponible");
+                }*/
                 i.putExtra("image",aa);
                 setResult(Activity.RESULT_OK,i);
                 finish();

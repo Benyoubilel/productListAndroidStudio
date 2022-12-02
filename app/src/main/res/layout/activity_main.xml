@@ -8,36 +8,40 @@
     android:orientation="vertical">
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="10dp">
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
+
         <Button
             android:id="@+id/ajouter"
+            style="?android:attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Ajouter"
             android:layout_marginLeft="25dp"
-            style="?android:attr/buttonBarButtonStyle" />
+            android:text="Ajouter" />
+
         <Button
             android:id="@+id/modifier"
+            style="?android:attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Modifier"
             android:layout_marginLeft="25dp"
-            style="?android:attr/buttonBarButtonStyle" />
+            android:onClick="updateProductButtonClick"
+            android:text="Modifier" />
+
         <Button
             android:id="@+id/supprimer"
+            style="?android:attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Supprimer"
             android:layout_marginLeft="25dp"
-            style="?android:attr/buttonBarButtonStyle" />
+            android:onClick="deleteProductButtonClick"
+            android:text="Supprimer" />
     </LinearLayout>
 
     <ListView
         android:id="@+id/liste"
-
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="30dp"

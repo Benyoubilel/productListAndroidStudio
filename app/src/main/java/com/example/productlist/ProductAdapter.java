@@ -1,5 +1,7 @@
 package com.example.productlist;
 
+import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -17,19 +19,15 @@ import java.util.ArrayList;
 
 public class ProductAdapter extends BaseAdapter {
 
-    private ArrayList<Produit> produits;
-    private Context context;
+    private  ArrayList<Produit> produits;
+    //private Context context;
+    private Activity context;
     byte[] decodedString;
 
-    public ProductAdapter(MainActivity mainActivity, int activity_list_item, ArrayList<Produit> produits) {
+    public ProductAdapter(Activity context , ArrayList<Produit> produits) {
         this.produits = produits;
         this.context = context;
     }
-
-    public ProductAdapter(ArrayList<Produit> produits) {
-        this.produits = produits;
-    }
-
 
     @Override
     public int getCount() {
@@ -46,48 +44,44 @@ public class ProductAdapter extends BaseAdapter {
         return 0;
     }
 
+    @SuppressLint("InflateParams")
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
             //LayoutInflater: instancier le fichier XML
             LayoutInflater inflater = (LayoutInflater) context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            //convertview : ki ysir el defilement yostokiha fil vue mta3i
-            convertView = (View) inflater.inflate(R.layout.productlayout, null);
+            convertView =inflater.inflate(R.layout.productlayout, null);
         }
         //************************************
-        TextView txtLibelle = (TextView)convertView.findViewById(R.id.Lib);
-        TextView txtCodeBarre=(TextView)convertView.findViewById(R.id.codeB);
-        TextView txtPrice=(TextView)convertView.findViewById(R.id.prix);
-        TextView txtDisponible=(TextView)convertView.findViewById(R.id.dispo);
-        CheckBox check =(CheckBox) convertView.findViewById(R.id.check);
-        ImageView imageView=(ImageView)convertView.findViewById(R.id.image)  ;
+        TextView txtLibelle = convertView.findViewById(R.id.Lib);
+        TextView txtCodeBarre=convertView.findViewById(R.id.codeB);
+        TextView txtPrice=convertView.findViewById(R.id.prix);
+        TextView Disponible=convertView.findViewById(R.id.diponible);
+        CheckBox check =convertView.findViewById(R.id.check);
+        ImageView imageView=convertView.findViewById(R.id.image)  ;
 
         txtLibelle.setText(produits.get(position).getLibelle());
         txtCodeBarre.setText(produits.get(position).getCodeBarre());
         txtPrice.setText(produits.get(position).getPrix());
-        //txtDisponible.setText(produits.get(position).getDisponible());
+        if(produits.get(position).getDisponible()) {
+            Disponible.setText("disponible");
+        }
+        else{
+            Disponible.setText("Hors stock");
+        }
         check.setChecked(produits.get(position).getCheckTask());
 
         decodedString = Base64.decode(produits.get(position).getImage(),Base64.DEFAULT);
         Bitmap decodedByte= BitmapFactory.decodeByteArray(decodedString,0,decodedString.length);
         imageView.setImageBitmap(decodedByte);
-        check.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-
-            @Override
-            public void onCheckedChanged(CompoundButton vw,
-                                         boolean isChecked) {
-
-                (produits.get(position)).setCheckTask(
-                        isChecked);
-
-            }
-        });
+        check.setOnCheckedChangeListener((vw, isChecked) -> (produits.get(position)).setCheckTask(
+                isChecked));
         return convertView;
     }
 
     public  ArrayList<Produit> getChecked() {
-        ArrayList<Produit> lesTaches = new ArrayList<Produit>();
+        ArrayList<Produit> lesTaches = new ArrayList<>();
         for (Produit p : produits) {
             if (p.getCheckTask())
                 lesTaches.add(p);
