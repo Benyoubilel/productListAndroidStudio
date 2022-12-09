@@ -1,8 +1,10 @@
 package com.example.productlist;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Debug;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -12,6 +14,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.io.Console;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
 @SuppressWarnings("ALL")
@@ -43,8 +47,40 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        btnUpd=findViewById(R.id.modifier);
+        ArrayList<Produit> checkedItems = adapter.getChecked();
 
 
+            btnUpd.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View view) {
+                    ArrayList<Produit> checkedItems = adapter.getChecked();
+                    int itemCount = checkedItems.size();
+                    if(checkedItems.isEmpty() || itemCount>1){
+                        Toast.makeText(MainActivity.this,"item not selected or u have selected 2 items",Toast.LENGTH_LONG).show();
+
+                    }else {
+                        Intent intent = new Intent(MainActivity.this, MainActivityEditP.class);
+
+
+
+                              Produit  info =checkedItems.get(0);
+                             // System.out.println(info.toString());
+                                //Toast.makeText(MainActivity.this,  info.getCodeBarre(),Toast.LENGTH_LONG).show();
+
+                                intent.putExtra("libelle", info.getLibelle());
+                                intent.putExtra("codeBarre",  info.getCodeBarre());
+                                intent.putExtra("disponible", info.getDisponible());
+                                intent.putExtra("prix", info.getPrix());
+                                intent.putExtra("image", info.getImage());
+                                 startActivityForResult(intent, 1);
+                            }
+
+
+
+                }
+            });
 
     }
 
@@ -71,6 +107,7 @@ public class MainActivity extends AppCompatActivity {
             adapter.notifyDataSetChanged();
         }
     }
+
     public void deleteProductButtonClick(View view)
     {
         ArrayList<Produit> checkedItems = adapter.getChecked();

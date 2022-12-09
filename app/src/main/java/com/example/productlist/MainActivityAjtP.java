@@ -6,6 +6,7 @@ import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -17,6 +18,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.google.android.gms.cast.framework.media.ImagePicker;
 
@@ -60,20 +62,13 @@ public class MainActivityAjtP extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent i =new Intent();
-                i.putExtra("libelle","libelle: "+libelle.getText().toString());
-                i.putExtra("codeBarre","Code: "+codebarre.getText().toString());
-                i.putExtra("disponible",dispo.isChecked());
-                i.putExtra("prix","prix: "+prix.getText().toString());
-           /*     if(dispo.isChecked()){
-                    String x= "disponible";
-               i.putExtra("disponible",x);
-                     }else{
-                   String x="Hors ,String disponible";
-                    i.putExtra("disponible","Hors ,String disponible");
-                }*/
-                i.putExtra("image",aa);
-                setResult(Activity.RESULT_OK,i);
-                finish();
+                    i.putExtra("libelle", "libelle: " + libelle.getText().toString());
+                    i.putExtra("codeBarre", "Code: " + codebarre.getText().toString());
+                    i.putExtra("disponible", dispo.isChecked());
+                    i.putExtra("prix", "prix: " + prix.getText().toString());
+                    i.putExtra("image", aa);
+                    setResult(Activity.RESULT_OK, i);
+                    finish();
             }
         });
     }
