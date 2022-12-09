@@ -69,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
                              // System.out.println(info.toString());
                                 //Toast.makeText(MainActivity.this,  info.getCodeBarre(),Toast.LENGTH_LONG).show();
 
+                                intent.putExtra("id", info.getId());
                                 intent.putExtra("libelle", info.getLibelle());
                                 intent.putExtra("codeBarre",  info.getCodeBarre());
                                 intent.putExtra("disponible", info.getDisponible());
@@ -104,6 +105,24 @@ public class MainActivity extends AppCompatActivity {
            t.setDisponible(dispo);
             t.setImage(image);
             listeDesProduit.add(t);
+            adapter.notifyDataSetChanged();
+        }
+        else  if (requestCode == 1 && resultCode == Activity.RESULT_OK)
+        {
+            Produit t = new Produit();
+            int id=data.getIntExtra("id",0);
+            String libelle=data.getStringExtra("libelle");
+            String codebarre=data.getStringExtra("codeBarre");
+            String prix=data.getStringExtra("prix");
+            boolean dispo=data.getBooleanExtra("disponible",false);
+            String image=data.getStringExtra("image");
+            t.setId(id);
+            t.setLibelle(libelle);
+            t.setCodeBarre(codebarre);
+            t.setPrix(prix);
+            t.setDisponible(dispo);
+            t.setImage(image);
+            listeDesProduit.set(id,t);
             adapter.notifyDataSetChanged();
         }
     }

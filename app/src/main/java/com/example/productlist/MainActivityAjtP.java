@@ -62,10 +62,10 @@ public class MainActivityAjtP extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent i =new Intent();
-                    i.putExtra("libelle", "libelle: " + libelle.getText().toString());
-                    i.putExtra("codeBarre", "Code: " + codebarre.getText().toString());
+                    i.putExtra("libelle",  libelle.getText().toString());
+                    i.putExtra("codeBarre",  codebarre.getText().toString());
                     i.putExtra("disponible", dispo.isChecked());
-                    i.putExtra("prix", "prix: " + prix.getText().toString());
+                    i.putExtra("prix", prix.getText().toString());
                     i.putExtra("image", aa);
                     setResult(Activity.RESULT_OK, i);
                     finish();

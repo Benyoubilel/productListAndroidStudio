@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Base64;
@@ -25,6 +26,7 @@ public class MainActivityEditP extends AppCompatActivity {
     Button modifier,camera;
     CheckBox dispo;
     String aa;
+    int id;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,8 +44,24 @@ public class MainActivityEditP extends AppCompatActivity {
 
         Intent data = getIntent();
 
+        id = data.getIntExtra("id",0);
         String lib=data.getStringExtra("libelle");
+
         libelle.setText(lib);
+
+        String code=data.getStringExtra("codeBarre");
+        codebarre.setText(code);
+         String pr=data.getStringExtra("prix");
+         prix.setText(pr);
+
+        boolean disp=data.getBooleanExtra("disponible",false);
+        dispo.setChecked(disp);
+        aa=data.getStringExtra("image");
+        ImageView imageview = (ImageView) findViewById(R.id.image);
+        byte[] decodedString = Base64.decode(aa,Base64.DEFAULT);
+        Bitmap im= BitmapFactory.decodeByteArray(decodedString,0,decodedString.length);
+        imageview.setImageBitmap(im);
+
 
 
         if(ContextCompat.checkSelfPermission(MainActivityEditP.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED){
@@ -59,6 +77,23 @@ public class MainActivityEditP extends AppCompatActivity {
                 //ImagePicker.Companion.with(MainActivityAjtP.this).cropp().MaxResultSize(1080,1080).start(101);
             }
         });
+
+
+        modifier.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i =new Intent();
+                i.putExtra("id",  id);
+                i.putExtra("libelle",  libelle.getText().toString());
+                i.putExtra("codeBarre",  codebarre.getText().toString());
+                i.putExtra("disponible", dispo.isChecked());
+                i.putExtra("prix", prix.getText().toString());
+                i.putExtra("image", aa);
+                setResult(Activity.RESULT_OK, i);
+                finish();
+            }
+        });
+
     }
 
     @Override
@@ -69,16 +104,7 @@ public class MainActivityEditP extends AppCompatActivity {
 
         if (requestCode == 1 && resultCode == Activity.RESULT_OK)
         {
-            /*
-            String lib=data.getStringExtra("libelle");
-            libelle.setText(lib);
-            //String code=data.getStringExtra("codeBarre");
-            codebarre.setText(data.getStringExtra("codeBarre"));
-           // String pr=data.getStringExtra("prix");
-            dispo.setChecked(data.getBooleanExtra("disponible",false));
-            //boolean disp=data.getBooleanExtra("disponible",false);
-            //  String image=data.getStringExtra("image");
-            */
+
 
                Bitmap im = (Bitmap) data.getExtras().get("data");
                 ImageView imageview = (ImageView) findViewById(R.id.image);

@@ -61,9 +61,11 @@ public class ProductAdapter extends BaseAdapter {
         CheckBox check =convertView.findViewById(R.id.check);
         ImageView imageView=convertView.findViewById(R.id.image)  ;
 
-        txtLibelle.setText(produits.get(position).getLibelle());
-        txtCodeBarre.setText(produits.get(position).getCodeBarre());
-        txtPrice.setText(produits.get(position).getPrix());
+        produits.get(position).setId(position);
+
+        txtLibelle.setText("LIbelle: "+produits.get(position).getLibelle());
+        txtCodeBarre.setText("code: "+produits.get(position).getCodeBarre());
+        txtPrice.setText("prix: "+produits.get(position).getPrix());
         if(produits.get(position).getDisponible()) {
             Disponible.setText("disponible");
         }
